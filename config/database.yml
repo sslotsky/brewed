@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: brewed2_dev
+
+production:
+  <<: *default
+  database: brewed2_dev
+
+test:
+  <<: *default
+  database: brewed2_test
