@@ -1,0 +1,2 @@
+class ApiCredentialsInvalid < StandardError
+end

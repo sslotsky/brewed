@@ -3,8 +3,16 @@ class ApplicationController < ActionController::API
 
   before_action :validate_api_key!
 
+  rescue_from AuthenticationRequired do |e|
+    render json: { status: 403, message: 'Authentication Required', code: :authentication_required }, status: 403
+  end
+
+  rescue_from ApiCredentialsInvalid do |e|
+    render json: { status: 401, message: 'API Credentials Invalid', code: :api_credentials_invalid }, status: 401
+  end
+
   def authenticate!
-    raise "Not authenticated!" unless current_user
+    raise AuthenticationRequired.new unless current_user
   end
 
   def current_user
@@ -16,6 +24,6 @@ class ApplicationController < ActionController::API
   private
 
   def validate_api_key!
-    render nothing: true, status: :unauthorized unless ApiKey.find_by(api_key: request.headers['X-Api-Key'])
+    raise ApiCredentialsInvalid.new unless ApiKey.find_by(api_key: request.headers['X-Api-Key'])
   end
 end

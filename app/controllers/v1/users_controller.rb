@@ -1,9 +1,12 @@
 class V1::UsersController < ApplicationController
   get :index do
+    params do
+      param :limit, Integer, min: 1, max: 100, default: 10
+      param :offset, Integer, min: 0, default: 0
+    end
     presenter V1::UserPresenter
     request do
-      users = User.all.limit(10)
-      present users
+      present User.limit(params[:limit]).offset(params[:offset])
     end
   end
 
@@ -13,8 +16,7 @@ class V1::UsersController < ApplicationController
     end
     presenter V1::UserPresenter
     request do
-      user = User.find(params[:id])
-      present user
+      present User.find(params[:id])
     end
   end
 
@@ -22,8 +24,7 @@ class V1::UsersController < ApplicationController
     form :user, V1::UserForm
     presenter V1::UserPresenter
     request do
-      user = @form.save!
-      present user
+      present @form.save!
     end
   end
 
@@ -35,8 +36,7 @@ class V1::UsersController < ApplicationController
     end
     presenter V1::ApiTokenPresenter
     request do
-      present ::AuthenticationService.new.authenticate(params[:username],
-        params[:password], params[:user_agent])
+      present ::AuthenticationService.new.authenticate(**declared.deep_symbolize_keys)
     end
   end
 end

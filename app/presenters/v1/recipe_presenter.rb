@@ -89,6 +89,19 @@ class V1::EquipmentProfilePresenter < Presenter
 end
 
 class V1::RecipePresenter < Presenter
+  include Swagger::Blocks
+
+  swagger_schema :RecipePresenter do
+    key :required, [:id, :name]
+    property :id do
+      key :type, :integer
+      key :format, :int64
+    end
+    property :name do
+      key :type, :string
+    end
+  end
+
   attribute :id, Integer
   attribute :name, String
   attribute :og, Float

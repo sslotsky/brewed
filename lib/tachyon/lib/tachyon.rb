@@ -57,7 +57,7 @@ module Tachyon
     
       self.class_exec do
         def declared()
-          Hashie::Mash.new(params)
+          @declared ||= {}
         end
 
         def present(object)
@@ -97,6 +97,7 @@ module Tachyon
           end
           
           if meta.has_key?(:params)
+            @declared = {}
             meta[:params].each do |param, opts|
               if params.has_key?(param.to_s)
                 raise "#{param} is not a #{opts[:type]}" unless validate_param_type(params[param.to_s], opts[:type])
@@ -118,6 +119,8 @@ module Tachyon
                     raise "#{param} must be one of #{opts[:values]}"
                   end
                 end
+
+                @declared[param] = params[param]
               else
                 params[param] = opts[:default] if opts.has_key?(:default)
                 raise "#{param} is required" if opts[:required]
