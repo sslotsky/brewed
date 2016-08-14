@@ -40,6 +40,13 @@ class Recipe < ApplicationRecord
 
   validates :fermentation_temp, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 212 }
 
+  def self.search(limit:, offset:)
+    {
+      total_count: self.count,
+      results: self.limit(limit).offset(offset)
+    }
+  end
+
   def as_json(options = nil)
     super({include: [:equipment_profile, {recipe_fermentables: {include: :fermentable}}, {recipe_hops: {include: :hop}}, {recipe_yeasts: {include: :yeast}}, {recipe_extras: {include: :extra}}]}.merge(options || {}))
   end

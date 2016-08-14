@@ -36,7 +36,7 @@ class V1::UsersController < ApplicationController
     end
     presenter V1::ApiTokenPresenter
     request do
-      present ::AuthenticationService.new.authenticate(**declared.deep_symbolize_keys)
+      present ::AuthenticationService.new.authenticate(**declared)
     end
   end
 end

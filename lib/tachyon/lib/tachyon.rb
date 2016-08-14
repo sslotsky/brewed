@@ -57,7 +57,7 @@ module Tachyon
     
       self.class_exec do
         def declared()
-          @declared ||= {}
+          @declared.deep_symbolize_keys ||= {}
         end
 
         def present(object)
