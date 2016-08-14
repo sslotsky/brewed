@@ -11,6 +11,10 @@ class ApplicationController < ActionController::API
     render json: { status: 401, message: 'API Credentials Invalid', code: :api_credentials_invalid }, status: 401
   end
 
+  rescue_from ActiveRecord::RecordInvalid do |e|
+    render json: { status: 422, message: 'Record Invalid', code: :record_invalid, errors: e.record.errors }, status: 422
+  end
+
   def authenticate!
     raise AuthenticationRequired.new unless current_user
   end
