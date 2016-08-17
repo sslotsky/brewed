@@ -9,6 +9,13 @@ class User < ApplicationRecord
 
   before_create :hash_password
   
+  def self.search(limit:, offset:)
+    {
+      total_count: self.count,
+      results: self.limit(limit).offset(offset)
+    }
+  end
+  
   def hash_password
     self.password = BCrypt::Password.create(self.password)
   end

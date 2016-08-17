@@ -4,9 +4,9 @@ class V1::UsersController < ApplicationController
       param :limit, Integer, min: 1, max: 100, default: 10
       param :offset, Integer, min: 0, default: 0
     end
-    presenter V1::UserPresenter
+    presenter V1::SearchResultsPresenter[V1::UserPresenter]
     request do
-      present User.limit(params[:limit]).offset(params[:offset])
+      present User.search(**declared)
     end
   end
 
