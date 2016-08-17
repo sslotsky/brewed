@@ -5,7 +5,7 @@ gem 'pg', '~> 0.18.4'
 gem 'bcrypt', '~> 3.1.11'
 gem 'virtus', '~> 1.0.5'
 gem 'rack-cors', '~> 0.4.0', :require => 'rack/cors'
-gem 'tachyon', path: 'lib/tachyon'
+gem 'cerulean'
 
 group :development do
   gem 'listen', '~> 3.0'
