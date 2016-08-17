@@ -12,7 +12,12 @@ class ApplicationController < ActionController::API
   end
 
   rescue_from ActiveRecord::RecordInvalid do |e|
-    render json: { status: 422, message: 'Record Invalid', code: :record_invalid, errors: e.record.errors }, status: 422
+    errors = e.record.errors.messages.map { |field, messages| [field, messages.map{ |message| message.translation_metadata[:default].last.to_s.split('.').last }] }.to_h
+    render json: { status: 422, message: 'Record Invalid', code: :record_invalid, errors: errors, status: 422 }
+  end
+
+  rescue_from ActiveRecord::RecordNotFound do |e|
+    render json: { status: 404, message: 'Record Not Found', code: :record_not_found }, status: 404
   end
 
   def authenticate!
