@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  include Tachyon
+  include Cerulean
 
   before_action :validate_api_key!
 
