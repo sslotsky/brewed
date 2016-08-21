@@ -43,7 +43,7 @@ class Recipe < ApplicationRecord
   def self.search(page:, results_per_page:)
     {
       total_count: self.count,
-      results: self.limit(results_per_page).offset((page - 1) * results_per_page)
+      results: self.limit(results_per_page.to_i).offset((page.to_i - 1) * results_per_page.to_i)
     }
   end
 
