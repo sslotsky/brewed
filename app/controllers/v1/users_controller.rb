@@ -1,8 +1,8 @@
 class V1::UsersController < ApplicationController
   get :index do
     params do
-      param :limit, Integer, min: 1, max: 100, default: 10
-      param :offset, Integer, min: 0, default: 0
+      param :page, Integer, min: 1, default: 1
+      param :results_per_page, Integer, min: 1, max: 100, default: 10
     end
     presenter V1::SearchResultsPresenter[V1::UserPresenter]
     request do
