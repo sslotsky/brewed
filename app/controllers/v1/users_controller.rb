@@ -4,9 +4,9 @@ class V1::UsersController < ApplicationController
       param :page, Integer, min: 1, default: 1
       param :results_per_page, Integer, min: 1, max: 100, default: 10
     end
-    presenter V1::SearchResultsPresenter[V1::UserPresenter]
+    #presenter V1::SearchResultsPresenter[V1::UserPresenter]
     request do
-      present User.search(**declared)
+      #present User.search(**declared)
     end
   end
 
