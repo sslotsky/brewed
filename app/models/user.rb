@@ -12,7 +12,7 @@ class User < ApplicationRecord
   def self.search(limit:, offset:)
     {
       total_count: self.count,
-      results: self.limit(limit).offset(offset)
+      results: self.limit(results_per_page).offset((page - 1) * results_per_page)
     }
   end
   
