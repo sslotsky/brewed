@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
 
   rescue_from ActiveRecord::RecordInvalid do |e|
     errors = e.record.errors.messages.map { |field, messages| [field, messages.map{ |message| message.translation_metadata[:default].last.to_s.split('.').last }] }.to_h
-    render json: { status: 422, message: 'Record Invalid', code: :record_invalid, errors: errors, status: 422 }
+    render json: { status: 422, message: 'Record Invalid', code: :record_invalid, errors: errors }, status: 422
   end
 
   rescue_from ActiveRecord::RecordNotFound do |e|
