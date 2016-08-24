@@ -1,8 +1,10 @@
 class V1::RecipesController < ApplicationController
   get :index do
     params do
-      param :page, Integer, min: 1, default: 1
-      param :results_per_page, Integer, min: 1, max: 100, default: 10
+      param :page, Integer, min: 1
+      param :results_per_page, Integer, min: 1, max: 100
+      param :sort, String, values: %i(id name created_at)
+      param :sort_reverse, Boolean
     end
     presenter V1::SearchResultsPresenter[V1::RecipePresenter]
     request do

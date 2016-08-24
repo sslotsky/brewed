@@ -40,10 +40,10 @@ class Recipe < ApplicationRecord
 
   validates :fermentation_temp, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 212 }
 
-  def self.search(page:, results_per_page:)
+  def self.search(page: 1, results_per_page: 10, sort: :id, sort_reverse: false)
     {
       total_count: self.count,
-      results: self.limit(results_per_page.to_i).offset((page.to_i - 1) * results_per_page.to_i).all
+      results: self.order({sort.to_sym => (sort_reverse ? :desc : :asc)}).limit(results_per_page.to_i).offset((page.to_i - 1) * results_per_page.to_i).all
     }
   end
 

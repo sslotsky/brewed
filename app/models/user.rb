@@ -9,10 +9,10 @@ class User < ApplicationRecord
 
   before_create :hash_password
   
-  def self.search(limit:, offset:)
+  def self.search(page: 1, results_per_page: 10, sort: :id, sort_reverse: false)
     {
       total_count: self.count,
-      results: self.limit(results_per_page.to_i).offset((page.to_i - 1) * results_per_page.to_i).all
+      results: self.order({sort.to_sym => (sort_reverse ? :desc : :asc)}).limit(results_per_page.to_i).offset((page.to_i - 1) * results_per_page.to_i).all
     }
   end
   
