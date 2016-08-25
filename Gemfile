@@ -6,6 +6,7 @@ gem 'bcrypt', '~> 3.1.11'
 gem 'virtus', '~> 1.0.5'
 gem 'rack-cors', '~> 0.4.0', :require => 'rack/cors'
 gem 'cerulean'
+gem 'jbuilder'
 
 group :development do
   gem 'listen', '~> 3.0'

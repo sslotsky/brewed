@@ -6,9 +6,9 @@ class V1::UsersController < ApplicationController
       param :sort, String, values: %i(id username created_at)
       param :sort_reverse, Boolean
     end
-    presenter V1::SearchResultsPresenter[V1::UserPresenter]
+    presenter V1::SearchResultsPresenter
     request do
-      present User.search(**declared)
+      present User.search(**declared), with: V1::UserPresenter
     end
   end
 
