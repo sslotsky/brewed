@@ -1,12 +1,14 @@
 class V1::UsersController < ApplicationController
   get :index do
     params do
-      param :page, Integer, min: 1, default: 1
-      param :results_per_page, Integer, min: 1, max: 100, default: 10
+      param :page, Integer, min: 1
+      param :results_per_page, Integer, min: 1, max: 100
+      param :sort, String, values: %i(id username created_at)
+      param :sort_reverse, Boolean
     end
-    #presenter V1::SearchResultsPresenter[V1::UserPresenter]
+    presenter V1::SearchResultsPresenter
     request do
-      #present User.search(**declared)
+      present User.search(**declared), with: V1::UserPresenter
     end
   end
 

@@ -4,6 +4,7 @@ class V1::RecipeForm < Form
     super(params)
   end
 
+  attribute :parent_id, Integer
   attribute :name, String
   attribute :recipe_fermentables, Array[RecipeFermentableForm]
   attribute :recipe_hops, Array[RecipeHopForm]
@@ -36,6 +37,7 @@ class V1::RecipeForm < Form
   end
 
   def build
+    @recipe.parent_id = self.parent_id
     @recipe.name = self.name
     @recipe.equipment_profile = self.equipment_profile.build
     @recipe.og = self.og
@@ -48,18 +50,10 @@ class V1::RecipeForm < Form
     @recipe.boil_time = self.boil_time
     @recipe.fermentation_temp = self.fermentation_temp
     @recipe.user_id = self.user_id
-    self.recipe_fermentables.each do |rf|
-      @recipe.recipe_fermentables << rf.build
-    end
-    self.recipe_hops.each do |rh|
-      @recipe.recipe_hops << rh.build
-    end
-    self.recipe_yeasts.each do |ry|
-      @recipe.recipe_yeasts << ry.build
-    end
-    self.recipe_extras.each do |re|
-      @recipe.recipe_extras << re.build
-    end
+    @recipe.recipe_fermentables = self.recipe_fermentables.map { |rf| rf.build }
+    @recipe.recipe_hops = self.recipe_hops.map { |rh| rh.build }
+    @recipe.recipe_yeasts = self.recipe_yeasts.map { |ry| ry.build }
+    @recipe.recipe_extras = self.recipe_extras.map { |re| re.build }
   end
 
   def save!

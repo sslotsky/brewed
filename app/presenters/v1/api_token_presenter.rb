@@ -1,9 +1,19 @@
-class V1::ApiTokenPresenter < Presenter
-  attribute :id, Integer
-  attribute :auth_token, String
-  attribute :refresh_token, String
+module V1
+  class ApiTokenPresenter
+    def initialize(api_token)
+      @api_token = api_token
+    end
+    
+    def to_jbuilder
+      Jbuilder.new do |json|
+        json.extract! @api_token, :id, :auth_token, :refresh_token
 
-  def initialize(auth_token)
-    super(auth_token)
+        json.user UserPresenter.single(@api_token.user, type: :detail)
+      end
+    end
+
+    def as_json(**args)
+      to_jbuilder.attributes!
+    end
   end
 end
