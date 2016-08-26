@@ -8,6 +8,7 @@ gem 'rack-cors', '~> 0.4.0', :require => 'rack/cors'
 gem 'cerulean'
 gem 'jbuilder'
 gem 'upsert'
+gem 'marky_markov'
 
 group :development do
   gem 'listen', '~> 3.0'
