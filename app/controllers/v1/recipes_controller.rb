@@ -18,7 +18,7 @@ class V1::RecipesController < ApplicationController
     end
     presenter V1::RecipePresenter
     request do
-      present Recipe.find(params[:id])
+      present Recipe.find(params[:id]), type: :detail
     end
   end
 

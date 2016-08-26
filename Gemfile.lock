@@ -154,6 +154,7 @@ GEM
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    upsert (2.1.2)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -178,6 +179,7 @@ DEPENDENCIES
   rspec-rails
   shoulda
   shoulda-callback-matchers
+  upsert
   virtus (~> 1.0.5)
 
 BUNDLED WITH

@@ -18,7 +18,7 @@ class V1::UsersController < ApplicationController
     end
     presenter V1::UserPresenter
     request do
-      present User.find(params[:id])
+      present User.find(params[:id]), type: :detail
     end
   end
 
@@ -26,7 +26,7 @@ class V1::UsersController < ApplicationController
     form :user, V1::UserForm
     presenter V1::UserPresenter
     request do
-      present @form.save!
+      present @form.save!, type: :detail
     end
   end
 
@@ -38,7 +38,7 @@ class V1::UsersController < ApplicationController
     end
     presenter V1::ApiTokenPresenter
     request do
-      present ::AuthenticationService.new.authenticate(**declared)
+      present ::AuthenticationService.new.authenticate(**declared), type: :detail
     end
   end
 end
