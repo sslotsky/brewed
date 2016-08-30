@@ -7,8 +7,9 @@ module V1
     def to_jbuilder(type)
       Jbuilder.new do |json|
         json.extract! @recipe,
-          :id, :name, :batch_size, :boil_time, :og, :fg, :abv, :color, :ibu,
-          :balance, :notes
+          :id, :parent_id, :name, :batch_size, :boil_time, :og, :fg, :abv,
+          :color, :ibu, :balance, :notes, :fermentation_temp, :created_at,
+          :updated_at
         
         json.user do
           json.extract! @recipe.user, :id, :username

@@ -6,7 +6,7 @@ module V1
 
     def to_jbuilder(type)
       Jbuilder.new do |json|
-        json.extract! @user, :id, :username
+        json.extract! @user, :id, :username, :created_at, :updated_at
       end
     end
 
