@@ -41,13 +41,13 @@ namespace :brewed do
     )
 
     r.recipe_fermentables << RecipeFermentable.new(
-      fermentable_id: 1,
+      fermentable_id: Fermentable.first.id,
       amount: 5,
       use: "mash"
     )
 
     r.recipe_hops << RecipeHop.new(
-      hop_id: 1,
+      hop_id: Hop.first.id,
       amount: 1,
       time: 60,
       use: "boil",
@@ -55,11 +55,11 @@ namespace :brewed do
     )
 
     r.recipe_yeasts << RecipeYeast.new(
-      yeast_id: 1
+      yeast_id: Yeast.first.id
     )
 
     r.recipe_extras << RecipeExtra.new(
-      extra_id: 1,
+      extra_id: Extra.first.id,
       amount: 1,
       amount_unit: "ea",
       time: 60,
@@ -67,9 +67,12 @@ namespace :brewed do
       use: "boil"
     )
 
-    r.save
-
-    puts r.name
+    if r.valid?
+      r.save
+      puts r.name
+    else
+      puts r.errors.inspect
+    end 
   end
 
   task :create_recipes, [:num] => :environment do |t, args|
