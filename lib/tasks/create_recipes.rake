@@ -1,6 +1,10 @@
 require 'marky_markov'
 
 namespace :brewed do
+  def rand_range(min, max)
+    rand * (max - min) + min
+  end
+
   def generate_recipe_name
     filename = File.join(Rails.root, 'lib', 'recipe_names.txt')
     markov = MarkyMarkov::TemporaryDictionary.new
@@ -12,15 +16,15 @@ namespace :brewed do
     r = Recipe.new(
       name: generate_recipe_name,
       user_id: 1,
-      og: 1.050,
-      fg: 1.012,
-      ibu: 20,
-      color: 5,
-      abv: 0.05,
-      balance: 0.5,
-      batch_size: 5.5,
+      og: rand_range(1.030, 1.075),
+      fg: rand_range(1.008, 1.029),
+      ibu: rand_range(10, 60),
+      color: rand_range(1, 40),
+      abv: rand,
+      balance: rand,
+      batch_size: rand_range(1, 10),
       boil_time: 60,
-      fermentation_temp: 60
+      fermentation_temp: rand_range(50, 70)
     )
 
     r.equipment_profile = EquipmentProfile.new(
