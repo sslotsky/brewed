@@ -3,11 +3,12 @@ class V1::RecipesController < ApplicationController
     params do
       param :page, Integer, min: 1
       param :results_per_page, Integer, min: 1, max: 100
-      param :sort, String, values: %i(id name created_at)
+      param :sort, String, values: %i(id name og fg ibu color abv balance batch_size boil_time fermentation_temp created_at updated_at)
       param :sort_reverse, Boolean
     end
     presenter V1::SearchResultsPresenter
     request do
+      puts declared.inspect
       present Recipe.search(**declared), with: V1::RecipePresenter
     end
   end

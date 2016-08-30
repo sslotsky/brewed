@@ -6,7 +6,8 @@ module V1
     
     def to_jbuilder
       Jbuilder.new do |json|
-        json.extract! @api_token, :id, :auth_token, :refresh_token
+        json.extract! @api_token, :id, :auth_token, :refresh_token,
+          :created_at, :updated_at
 
         json.user UserPresenter.single(@api_token.user, type: :detail)
       end
