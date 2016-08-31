@@ -4,7 +4,7 @@ class V1::UsersController < ApplicationController
       param :page, Integer, min: 1
       param :results_per_page, Integer, min: 1, max: 100
       param :sort, String, values: %i(id username created_at)
-      param :sort_reverse, Boolean
+      param :sort_reverse, ::Boolean
     end
     presenter V1::SearchResultsPresenter
     request do
