@@ -1,20 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe V1::RecipesController, type: :controller do
-  let!(:api_key) { FactoryGirl.create(:api_key) }
-  let!(:api_token) { FactoryGirl.create(:api_token) }
-
-  before do
-    @request.headers['X-Api-Key'] = api_key.api_key
-    @request.headers['X-Auth-Token'] = api_token.auth_token
-    @request.headers['Content-Type'] = 'application/json'
-  end
+  include_context 'json controller'
 
   it_behaves_like 'an authenticated controller action', :get, :index
   it_behaves_like 'an authenticated controller action', :get, :show, params: { id: 0 }
   it_behaves_like 'an authenticated controller action', :post, :create
 
   describe 'GET /recipes' do
+    include_context 'api key validation disabled'
+    include_context 'authentication disabled'
+
     let!(:recipe) { FactoryGirl.create(:recipe) }
 
     before do
@@ -40,6 +36,9 @@ RSpec.describe V1::RecipesController, type: :controller do
   end
 
   describe 'GET /recpipes/:id' do
+    include_context 'api key validation disabled'
+    include_context 'authentication disabled'
+
     let!(:recipe) { FactoryGirl.create(:recipe) }
 
     before do
@@ -57,5 +56,7 @@ RSpec.describe V1::RecipesController, type: :controller do
   end
 
   describe 'POST /recipes' do
+    include_context 'api key validation disabled'
+    include_context 'authentication disabled'
   end
 end
