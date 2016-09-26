@@ -20,6 +20,10 @@ class ApplicationController < ActionController::API
     render json: { status: 404, message: 'Record Not Found', code: :record_not_found }, status: 404
   end
 
+  def cookies
+    request.cookie_jar
+  end
+
   def authenticate!
     raise AuthenticationRequired.new unless current_user
   end

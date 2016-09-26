@@ -8,6 +8,7 @@ class V1::UsersController < ApplicationController
     end
     presenter V1::SearchResultsPresenter
     request do
+      authenticate!
       present User.search(**declared), with: V1::UserPresenter
     end
   end
@@ -18,6 +19,7 @@ class V1::UsersController < ApplicationController
     end
     presenter V1::UserPresenter
     request do
+      authenticate!
       present User.find(params[:id]), type: :detail
     end
   end
@@ -38,7 +40,9 @@ class V1::UsersController < ApplicationController
     end
     presenter V1::ApiTokenPresenter
     request do
-      present ::AuthenticationService.new.authenticate(**declared), type: :detail
+      api_token = ::AuthenticationService.new.authenticate(**declared)
+      cookies['auth_token'] = { value: api_token.auth_token, httponly: true }
+      present api_token, type: :detail
     end
   end
 end

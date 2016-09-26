@@ -15,6 +15,7 @@ group :development do
 end
 
 group :test do
+  gem 'faker'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'shoulda'
