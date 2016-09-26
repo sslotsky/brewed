@@ -1,4 +1,6 @@
 class V1::RecipesController < ApplicationController
+  before_action :'authenticate!'
+  
   get :index do
     params do
       param :page, Integer, min: 1
@@ -8,7 +10,6 @@ class V1::RecipesController < ApplicationController
     end
     presenter V1::SearchResultsPresenter
     request do
-      authenticate!
       present Recipe.search(**declared), with: V1::RecipePresenter
     end
   end
@@ -19,7 +20,6 @@ class V1::RecipesController < ApplicationController
     end
     presenter V1::RecipePresenter
     request do
-      authenticate!
       present Recipe.find(params[:id]), type: :detail
     end
   end
@@ -28,7 +28,6 @@ class V1::RecipesController < ApplicationController
     form :recipe, V1::RecipeForm
     presenter V1::RecipePresenter
     request do
-      authenticate!
       present @form.with_user(current_user).save!, type: :detail
     end
   end

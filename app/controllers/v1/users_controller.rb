@@ -1,4 +1,6 @@
 class V1::UsersController < ApplicationController
+  before_action :'authenticate!', except: [:authenticate]
+
   get :index do
     params do
       param :page, Integer, min: 1
@@ -8,7 +10,6 @@ class V1::UsersController < ApplicationController
     end
     presenter V1::SearchResultsPresenter
     request do
-      authenticate!
       present User.search(**declared), with: V1::UserPresenter
     end
   end
@@ -19,7 +20,6 @@ class V1::UsersController < ApplicationController
     end
     presenter V1::UserPresenter
     request do
-      authenticate!
       present User.find(params[:id]), type: :detail
     end
   end
