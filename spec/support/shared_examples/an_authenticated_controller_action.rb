@@ -10,7 +10,6 @@ RSpec.shared_examples 'an authenticated controller action' do |verb, action, par
     before do
       @request.headers['X-Api-Key'] = api_key.api_key
       @request.headers['X-Auth-Token'] = nil
-
     end
 
     it 'should return a 403' do
