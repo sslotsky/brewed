@@ -45,8 +45,7 @@ RSpec.describe V1::UsersController, type: :controller do
     end
 
     it 'should return a user' do
-      expect(json[:results][0])
-        .to(eq(present(user, with: V1::UserPresenter, type: :index)))
+      expect(json[:results][0]).to(eq(present(user, with: V1::UserPresenter, type: :index)))
     end
   end
 

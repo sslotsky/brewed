@@ -29,13 +29,15 @@ class ApplicationController < ActionController::API
   end
 
   def current_user
-    if request.headers.key?('X-Auth-Token')
-      @current_user ||= ApiToken.find_by(auth_token: request.headers['X-Auth-Token']).try(:user)
-    end
+    @current_user ||= AuthenticationService.new.find_user_by_auth_token(auth_token)
   end
 
   private
 
+  def auth_token
+    request.headers.key?('X-Auth-Token') ? request.headers['X-Auth-Token'] : cookies[:auth_token]
+  end
+  
   def validate_api_key!
     raise ApiCredentialsInvalid.new unless ApiKey.find_by(api_key: request.headers['X-Api-Key'])
   end
