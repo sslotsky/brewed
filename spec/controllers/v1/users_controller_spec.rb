@@ -37,7 +37,7 @@ RSpec.describe V1::UsersController, type: :controller do
       end
 
       it 'should respond with at least one user' do
-        expect(json[:total_count]).to(be > 0)
+        expect(json[:total_count]).to(eq(1))
       end
 
       it 'should have total_count number of users in the results array' do

@@ -21,7 +21,7 @@ RSpec.describe V1::RecipesController, type: :controller do
       end
 
       it 'should respond with at least one recipe' do
-        expect(json[:total_count]).to(be > 0)
+        expect(json[:total_count]).to(eq(1))
       end
 
       it 'should have total_count number of recipes in the results array' do

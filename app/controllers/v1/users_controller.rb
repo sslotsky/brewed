@@ -1,5 +1,5 @@
 class V1::UsersController < ApplicationController
-  before_action :'authenticate!', except: [:authenticate]
+  before_action :authenticate!, except: [:authenticate]
 
   get :index do
     params do
@@ -41,7 +41,7 @@ class V1::UsersController < ApplicationController
     presenter V1::ApiTokenPresenter
     request do
       api_token = ::AuthenticationService.new.authenticate(**declared)
-      cookies['auth_token'] = { value: api_token.auth_token, httponly: true }
+      set_cookie :auth_token, api_token.auth_token
       present api_token, type: :detail
     end
   end

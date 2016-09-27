@@ -32,6 +32,10 @@ class ApplicationController < ActionController::API
     @current_user ||= AuthenticationService.new.find_user_by_auth_token(auth_token)
   end
 
+  def set_cookie(name, value)
+    cookies[name] = { value: value, httponly: true }
+  end
+
   private
 
   def auth_token
