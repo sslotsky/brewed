@@ -1,4 +1,6 @@
 class V1::UsersController < ApplicationController
+  before_action :authenticate!, except: [:authenticate]
+
   get :index do
     params do
       param :page, Integer, min: 1
@@ -38,7 +40,9 @@ class V1::UsersController < ApplicationController
     end
     presenter V1::ApiTokenPresenter
     request do
-      present ::AuthenticationService.new.authenticate(**declared), type: :detail
+      api_token = ::AuthenticationService.new.authenticate(**declared)
+      set_cookie :auth_token, api_token.auth_token
+      present api_token, type: :detail
     end
   end
 end

@@ -20,18 +20,28 @@ class ApplicationController < ActionController::API
     render json: { status: 404, message: 'Record Not Found', code: :record_not_found }, status: 404
   end
 
+  def cookies
+    request.cookie_jar
+  end
+
   def authenticate!
     raise AuthenticationRequired.new unless current_user
   end
 
   def current_user
-    if request.headers.key?('X-Auth-Token')
-      @current_user ||= ApiToken.find_by(auth_token: request.headers['X-Auth-Token']).try(:user)
-    end
+    @current_user ||= AuthenticationService.new.find_user_by_auth_token(auth_token)
+  end
+
+  def set_cookie(name, value)
+    cookies[name] = { value: value, httponly: true }
   end
 
   private
 
+  def auth_token
+    request.headers.key?('X-Auth-Token') ? request.headers['X-Auth-Token'] : cookies[:auth_token]
+  end
+  
   def validate_api_key!
     raise ApiCredentialsInvalid.new unless ApiKey.find_by(api_key: request.headers['X-Api-Key'])
   end

@@ -41,5 +41,7 @@ module Brewed
         resource '*', :headers => :any, :methods => [:get, :put, :post, :delete, :options]
       end
     end
+
+    config.middleware.insert_after ActionDispatch::Callbacks, ActionDispatch::Cookies
   end
 end
