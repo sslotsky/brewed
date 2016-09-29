@@ -14,8 +14,9 @@ group :development do
   gem 'listen', '~> 3.0'
 end
 
-group :test do
+group :development, :test do
   gem 'faker'
+  gem 'rspec'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'shoulda'
