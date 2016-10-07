@@ -1,5 +1,5 @@
 class V1::UsersController < ApplicationController
-  before_action :authenticate!, except: [:authenticate]
+  before_action :authenticate!, except: [:authenticate, :create]
 
   get :index do
     params do

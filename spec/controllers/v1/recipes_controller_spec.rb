@@ -4,13 +4,10 @@ RSpec.describe V1::RecipesController, type: :controller do
   include_context 'json controller'
 
   describe 'GET /recipes' do
-    it_behaves_like 'an authenticated controller action', :get, :index
-
     let!(:recipe) { FactoryGirl.create(:recipe) }
 
     context 'when provided with an api key and an auth token' do
       include_context 'api key validation disabled'
-      include_context 'authentication disabled'
 
       before do
         get :index

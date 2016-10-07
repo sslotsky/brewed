@@ -1,5 +1,5 @@
 class V1::RecipesController < ApplicationController
-  before_action :authenticate!
+  before_action :authenticate!, except: [:index]
   
   get :index do
     params do
